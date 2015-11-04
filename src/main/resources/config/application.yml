@@ -1,0 +1,6 @@
+couchbase:
+    bucket:
+    password:
+    nodes:
+
+database:

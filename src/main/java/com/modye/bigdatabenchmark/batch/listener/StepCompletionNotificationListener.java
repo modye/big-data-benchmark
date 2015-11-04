@@ -9,9 +9,11 @@ import org.springframework.batch.core.listener.JobExecutionListenerSupport;
  */
 public class StepCompletionNotificationListener implements StepExecutionListener {
 
-    // TODO properties
-    private static final Logger log = Logger.getLogger("couchbase");
+    private static Logger log;
 
+    public StepCompletionNotificationListener(String profile) {
+        log = Logger.getLogger(profile);
+    }
 
     @Override
     public void beforeStep(StepExecution stepExecution) {
