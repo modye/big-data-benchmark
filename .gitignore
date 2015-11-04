@@ -3,6 +3,6 @@
 *.iml
 
 ## Directory-based project format:
-.idea/
+#.idea/
 
-target/
+#target/
