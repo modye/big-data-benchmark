@@ -1,6 +1,6 @@
 package com.modye.bigdatabenchmark.batch.configuration;
 
-import com.modye.bigdatabenchmark.batch.listener.JobCompletionNotificationListener;
+import com.modye.bigdatabenchmark.batch.listener.StepCompletionNotificationListener;
 import com.modye.bigdatabenchmark.batch.processor.TripItemProcessor;
 import com.modye.bigdatabenchmark.batch.writer.TripItemWriter;
 import com.modye.bigdatabenchmark.model.Trip;
@@ -10,6 +10,7 @@ import com.modye.bigdatabenchmark.repository.model.ModelTrip;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -58,10 +59,9 @@ public class ImportBatchConfiguration {
      * @return
      */
     @Bean
-    public Job importDataJob(JobBuilderFactory jobs, Step s1, JobCompletionNotificationListener listener) {
+    public Job importDataJob(JobBuilderFactory jobs, Step s1, StepCompletionNotificationListener listener) {
         return jobs.get("importDataJob")
                 .incrementer(new RunIdIncrementer())
-                .listener(listener)
                 .flow(s1)
                 .end()
                 .build();
@@ -75,6 +75,7 @@ public class ImportBatchConfiguration {
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)
+                .listener(listener())
                 .build();
     }
 
@@ -110,7 +111,7 @@ public class ImportBatchConfiguration {
     }
 
     @Bean
-    public JobExecutionListener listener() {
-        return new JobCompletionNotificationListener();
+    public StepExecutionListener listener() {
+        return new StepCompletionNotificationListener();
     }
 }
