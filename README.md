@@ -1,2 +1,2 @@
 # big-data-benchmark
-Benchmarck autour des solutions Big Data
+Benchmarck around Big Data solutions
